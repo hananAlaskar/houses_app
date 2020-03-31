@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:houses_app/model/House.dart';
+import 'package:houses_app/model/HousesAPI.dart';
 import 'package:intl/intl.dart';
-import 'package:houses_app/model/house.dart';
 
 class HousesListPage extends StatefulWidget {
   HousesListPage({Key key}) : super(key: key);
@@ -18,25 +19,25 @@ class _HousesListPageState extends State<HousesListPage> {
 
     if (_houses == null) {
       _houses = List<House>();
-      fillHousesWithDummyData();
+      getHousesData();
     }
   }
 
-  void fillHousesWithDummyData() {
+  void getHousesData() async {
+    List<House> houses = await HousesAPI().getHouses();
+    print(houses.length);
     setState(() {
-      int j = 1;
-      for (int i = 1; i <= 8; i++) {
-        j *= i * 10;
-        _houses.add(new House.name(
-            i, 3, 4, i.toDouble() * j, i.toDouble() * 1000, "Riyadh"));
-      }
+    _houses = houses;
     });
+    print(_houses.length);
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.count(
+      body:
+      GridView.count(
         crossAxisCount: 2,
         children: List.generate(_houses.length, (index) {
           return _buildProductItem(context, index);
@@ -59,7 +60,7 @@ class _HousesListPageState extends State<HousesListPage> {
         children: <Widget>[
           getHouseBasicInfo(index),
           Expanded(
-            child: getHouseImage(),
+            child: getHouseImage(index),
           ),
         ],
       ),
@@ -88,15 +89,16 @@ class _HousesListPageState extends State<HousesListPage> {
   }
 
   getHouseSizeInfo(index) {
+    var houseSizeFormated = NumberFormat.compact().format( _houses[index].houseSize);
     return Text(
-      _houses[index].houseSize.toString() + " sqft",
+      houseSizeFormated + " sqft",
       style: TextStyle(fontSize: 10),
     );
   }
 
   getHouseRoomsInfo(index) {
     return Container(
-      margin: EdgeInsets.only(left: 50),
+      margin: EdgeInsets.only(left: 18),
       child: Column(
         children: <Widget>[
           getBedroomsInfo(index),
@@ -142,11 +144,11 @@ class _HousesListPageState extends State<HousesListPage> {
     ]);
   }
 
-  getHouseImage() {
+  getHouseImage(index) {
     return Container(
       padding: EdgeInsets.all(8),
       child: Image.network(
-        "https://si.wsj.net/public/resources/images/B3-DM067_RIGHTS_IM_20190319162958.jpg",
+      _houses[index].imageUrl,
       ),
     );
   }

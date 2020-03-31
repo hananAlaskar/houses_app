@@ -1,44 +1,48 @@
-class House{
 
-  int _id;
-  int _numbersOfBeds;
-  int _numbersOfBathrooms;
-  double _price;
-  double _houseSize;
-  String _location;
+class House {
 
-  House.name(this._id, this._numbersOfBeds, this._numbersOfBathrooms,
-      this._price, this._houseSize, this._location);
+  int id;
+  int numbersOfBeds;
+  int numbersOfBathrooms;
+  double price;
+  double houseSize;
+  String location;
+  String imageUrl;
 
-  String get location => _location;
-
-  set location(String value)  => _location = value;
+  House({this.id, this.numbersOfBeds, this.numbersOfBathrooms,
+      this.price, this.houseSize, this.location, this.imageUrl});
 
 
-  double get houseSize => _houseSize;
-
-  set houseSize(double value) => _houseSize = value;
-
-
-  double get price => _price;
-
-  set price(double value) => _price = value;
-
-
-  int get numbersOfBathrooms => _numbersOfBathrooms;
-
-  set numbersOfBathrooms(int value) => _numbersOfBathrooms = value;
+  int get Id => id;
+  int get NumbersOfBeds => numbersOfBeds;
+  int get NumbersOfBathrooms => numbersOfBathrooms;
+  double get HouseSize => houseSize;
+  double get Price => price;
+  String get Location => location;
+  String get ImageUrl => imageUrl;
 
 
-  int get numbersOfBeds => _numbersOfBeds;
+  set Id(int value) => id = value;
+  set NumbersOfBeds(int value) => numbersOfBeds = value;
+  set NumbersOfBathrooms(int value) => numbersOfBathrooms = value;
+  set HouseSize(double value) => houseSize = value;
+  set Price(double value) => price = value;
+  set Location(String value) => location = value;
+  set ImageUrl(String value) => imageUrl = value;
 
-  set numbersOfBeds(int value) =>_numbersOfBeds = value;
 
 
-  int get id => _id;
+  factory House.fromJson(Map<String, dynamic> json) {
+    return House(
+        id: json["id"],
+        numbersOfBeds: json["numbersOfBeds"],
+        numbersOfBathrooms: json["numbersOfBathrooms"],
+        houseSize: json["houseSize"],
+        price: json["price"],
+        location: json["location"],
+        imageUrl: json["imageUrl"]);
 
-  set id(int value) =>_id = value;
 
-
+  }
 
 }
