@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:houses_app/model/House.dart';
 import 'package:houses_app/model/HousesAPI.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class HousesListPage extends StatefulWidget {
   HousesListPage({Key key}) : super(key: key);
@@ -129,11 +131,11 @@ class _HousesListPageState extends State<HousesListPage> {
 
   getBathroomsInfo(index) {
     return Row(children: <Widget>[
-      Icon(
-        Icons.home,
-        color: Colors.grey,
-        size: 20,
-      ),
+      Container(
+        height: 20,
+        width: 20,
+        child:
+      SvgPicture.asset("icons/bathroom_ic.svg", color: Colors.grey,),),
       Container(
         margin: EdgeInsets.only(left: 4),
         child: Text(
